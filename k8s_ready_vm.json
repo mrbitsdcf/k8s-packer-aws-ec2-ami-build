@@ -1,0 +1,41 @@
+{
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+        "region":         "sa-east-1"
+    },
+    "builders": [
+        {
+            "access_key": "{{user `aws_access_key`}}",
+            "ami_name": "k8s-ready-{{timestamp}}",
+            "instance_type": "t2.medium",
+            "region": "{{user `region`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "source_ami": "ami-05494b93950efa2fd",
+            "ssh_username": "ubuntu",
+            "type": "amazon-ebs",
+            "launch_block_device_mappings": [
+                {
+                    "device_name": "/dev/sda1",
+                    "volume_size": 20,
+                    "volume_type": "gp2",
+                    "delete_on_termination": true
+                }
+            ]
+        }
+    ],
+    "provisioners": [
+      {
+        "type": "file",
+        "source": "./deploy_k8s_ready.sh",
+        "destination": "/home/ubuntu/deploy_k8s_ready.sh"
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo /bin/bash -eux /home/ubuntu/deploy_k8s_ready.sh",
+          "rm /home/ubuntu/deploy_k8s_ready.sh"
+        ]
+      }
+    ]
+}
