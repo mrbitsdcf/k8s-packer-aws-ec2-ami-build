@@ -46,5 +46,5 @@ DEBIAN_FRONTEND=noninteractive apt-get \
     -o Dpkg::Options::=--force-confold \
     -o Dpkg::Options::=--force-confdef \
     -y --allow-downgrades --allow-remove-essential \
-    --allow-change-held-packages install kubelet=1.17.4-00 kubeadm=1.17.4-00 kubectl=1.17.4-00
+    --allow-change-held-packages install kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl
