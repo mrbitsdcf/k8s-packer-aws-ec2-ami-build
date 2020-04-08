@@ -1,5 +1,17 @@
 #!/bin/bash
 
+set -o errexit  # Exit on error
+set -o nounset  # Undefined variables
+set -o pipefail # Pipes or commands
+
+# Enable all repositories
+cat <<__EOF__>/etc/apt/sources.list
+deb http://archive.canonical.com/ubuntu bionic partner
+deb http://archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse
+__EOF__
+
 # Update OS
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get \
