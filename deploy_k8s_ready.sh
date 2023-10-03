@@ -51,12 +51,12 @@ sysctl --system
 # Install Kubernetes binaries
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<__EOF__> /etc/apt/sources.list.d/kubernetes.list
-deb https://apt.kubernetes.io/ kubernetes-xenial main
+deb https://apt.kubernetes.io/ kubernetes-focal main
 __EOF__
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get \
     -o Dpkg::Options::=--force-confold \
     -o Dpkg::Options::=--force-confdef \
     -y --allow-downgrades --allow-remove-essential \
-    --allow-change-held-packages install kubelet kubeadm kubectl
+    --allow-change-held-packages install kubelet kubeadm kubectl docker-compose
 apt-mark hold kubelet kubeadm kubectl
